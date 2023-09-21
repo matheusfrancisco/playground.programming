@@ -12,6 +12,8 @@ for folder in $FOLDERS; do
     if [ "$(find "$folder" -name '*.clj' | wc -l)" -eq 1 ]; then
         echo "$folder" 
         cd "$folder" || exit 1
+        echo "Running Clojure..." 
+        mkdir result-clj.txt
 
         if [ -f in.txt ]; then
             clojure -M ./*.clj < in.txt > result-clj.txt
