@@ -13,7 +13,6 @@ for folder in $FOLDERS; do
         echo "$folder" 
         cd "$folder" || exit 1
         echo "Running Clojure..." 
-        mkdir result-clj.txt
 
         if [ -f in.txt ]; then
             clojure -M ./*.clj < in.txt > result-clj.txt
