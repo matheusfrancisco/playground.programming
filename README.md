@@ -20,26 +20,29 @@ Usually the code here already pass in all test case at:
 - [Cracking The Code Interview- Book]()
 
 folder structure
+each folder could have been created in another github repository. (but I was too lazy to do it)
 
 ```
 /clojure/
   - ds/
     - bst.clj
   - algorithms/
-  - problems/
+  - solutions/
     - codeforces/
       - solution.clj
       - 01.txt
       - 01-out.txt
     - beecrowd/
-      - solution.clj
-      - 01.txt
-      - 01-out.txt
+      - 1000/
+        - solution.clj
+        - in.txt
+        - 01-out.txt
+    - deps.edn
 /zig/
   - ds/
     - bst.zig
   - algorithms/
-  - problems/
+  - solutions/
     - codeforces/
       - solution.zig
       - 01.txt
