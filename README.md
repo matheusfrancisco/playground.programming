@@ -4,8 +4,10 @@ is it a playground to run my algorithms in multiple programming languages
 
 Usually the code here already pass in all test case at:
 
+- [Hackerrank]()
 - [Beecrowd](https://www.beecrowd.com.br/)
 - [Codeforces](https://codeforces.com/)
+- [Leetcode]()
 - [Facebook Hacker Cup](https://www.facebook.com/codingcompetitions/hacker-cup)
 - [GeeksForGeeks](https://www.geeksforgeeks.org/)
 - [Google Code Jam](https://codingcompetitions.withgoogle.com/codejam/)
