@@ -1,5 +1,7 @@
 # Playground Algorithms
-[![CI](https://github.com/matheusfrancisco/playground.programming/actions/workflows/ci.yaml/badge.svg)]
+
+![CI](https://github.com/matheusfrancisco/playground.programming/actions/workflows/ci.yaml/badge.svg)
+
 This is a playground to play with competitive programming and algorithms and 
 use it to learn you favorite language.
 
