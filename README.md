@@ -62,8 +62,3 @@ each folder could have been created in another github repository. (but I was too
     - codeforces/
     - google-code-jam/
 ```
-
-if you want learn with me just send me an email:
-matheusmachadoufsc@gmail.com
-
-
