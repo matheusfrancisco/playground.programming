@@ -8,7 +8,8 @@
 	lint-fix \
 	new-problem \
 	run \
-	wrong
+	wrong \
+	no_docker
 
 SHELL = /bin/bash -euo pipefail
 
@@ -120,6 +121,12 @@ ifdef LANGUAGE
 	$(error On run task, you should use LANGUAGES not LANGUAGE)
 endif
 	@scripts/run-problems.sh "$(FOLDERS)" "$(SUPPORTED_LANGUAGES)" "$(DOCKER_RUN)"
+
+no_docker: clean
+ifdef LANGUAGE
+	$(error On run task, you should use LANGUAGES not LANGUAGE)
+endif
+	@scripts/run-problems-no-docker.sh "$(FOLDERS)" "$(SUPPORTED_LANGUAGES)" "$(DOCKER_RUN)"
 
 wrong:
 	@find . -name 'WRONG' | sort
