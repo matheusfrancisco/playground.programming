@@ -1,4 +1,5 @@
 # Playground Algorithms
+[![CI](https://github.com/matheusfrancisco/playground.programming/actions/workflows/ci.yaml/badge.svg)]
 This is a playground to play with competitive programming and algorithms and 
 use it to learn you favorite language.
 
@@ -48,14 +49,13 @@ each folder could have been created in another github repository. (but I was too
       - 01.txt
       - 01-out.txt
     - beecrowd/
-      - 1000/
+      - 1000/ # number of the problem in the beecrowd website
         - solution.clj
         - in.txt
         - 01-out.txt
     - deps.edn
 /zig/
-  - ds/
-    - bst.zig
+  - data_structures/
   - algorithms/
   - solutions/
     - codeforces/
