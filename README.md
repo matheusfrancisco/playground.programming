@@ -8,18 +8,19 @@ use it to learn you favorite language.
 To add a solutions for a problem you need it must be passing in its website
 
 ### TODO
+- [ ] add all my solutions (from those sites)
 - [ ] Add zig dockerfile
-- [ ] migrate sh to clojure babashka
+- [ ] migrate .sh to clojure babashka (or another thing)
 - [ ] Create a website to show the solutions solved and solutions not solved
 - [ ] Add a backend to run submission inside dockerfile
 
 
 Usually the code here already pass in all test case at:
 
-- [Hackerrank]()
+- [Hackerrank](https://www.hackerrank.com)
 - [Beecrowd](https://www.beecrowd.com.br/)
 - [Codeforces](https://codeforces.com/)
-- [Leetcode]()
+- [Leetcode](https://leetcode.com)
 - [Facebook Hacker Cup](https://www.facebook.com/codingcompetitions/hacker-cup)
 - [GeeksForGeeks](https://www.geeksforgeeks.org/)
 - [Google Code Jam](https://codingcompetitions.withgoogle.com/codejam/)
