@@ -1,6 +1,14 @@
 # Playground Algorithms
+This is a playground to play with competitive programming and algorithms and 
+use it to learn you favorite language.
 
-is it a playground to run my algorithms in multiple programming languages
+To add a solutions for a problem you need it must be passing in its website
+
+### TODO
+- [ ] Add zig dockerfile
+- [ ] migrate sh to clojure babashka
+- [ ] Create a website to show the solutions solved and solutions not solved
+
 
 Usually the code here already pass in all test case at:
 
@@ -55,3 +63,5 @@ each folder could have been created in another github repository. (but I was too
 
 if you want learn with me just send me an email:
 matheusmachadoufsc@gmail.com
+
+

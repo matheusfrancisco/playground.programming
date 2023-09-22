@@ -1,32 +1,29 @@
 .PHONY: \
 	__run-build \
-	__run-lint-build \
-	check-tags \
 	clean \
 	languages \
-	lint \
-	lint-fix \
-	new-problem \
 	run \
-	wrong \
-	no_docker
+	run_local
 
 SHELL = /bin/bash -euo pipefail
 
 CLJ = clj
+CPP =cpp
+C = c
+RS = rs
+ZIG = zig
+PY = py
 
 SUPPORTED_LANGUAGES = \
-	$(CLJ) 
+	$(CLJ) \
+	$(CPP) \
+	$(C) \
+	$(RS) \
+	$(ZIG) \
+	$(PY)
 
 ifdef LANGUAGES
 SUPPORTED_LANGUAGES := $(LANGUAGES)
-endif
-
-SUPPORTED_LINTS = \
-	$(CLJ) 
-
-ifdef LINTS
-SUPPORTED_LINTS := $(LINTS)
 endif
 
 FOLDER_EXISTS = 0
@@ -54,14 +51,6 @@ endif
 		$(DOCKER_BUILD) .docker/$$language.Dockerfile -t $$language .; \
 	done
 
-__run-lint-build:
-	@for language_lint in $(SUPPORTED_LINTS); do \
-		$(DOCKER_BUILD) .docker/lint/$${language_lint}-lint.Dockerfile -t $${language_lint}-lint .; \
-	done
-
-check-tags:
-	@scripts/check-tags.sh
-
 clean:
 	@find . -name '*.class' -delete
 	@find . -name '*.cml' -delete
@@ -78,43 +67,6 @@ clean:
 languages:
 	@./scripts/languages.sh
 
-lint: __run-lint-build
-ifdef LANGUAGES
-	$(error On lint task, you should use LINTS not LANGUAGES)
-endif
-	@for language_lint in $(SUPPORTED_LINTS); do \
-		$(DOCKER_RUN) $${language_lint}-lint; \
-	done
-
-lint-fix: __run-lint-build
-ifdef LANGUAGES
-	$(error On lint-fix task, you should use LINTS not LANGUAGES)
-endif
-	@for language_lint in $(SUPPORTED_LINTS); do \
-		$(DOCKER_RUN) -e LINT_FIX=1 $${language_lint}-lint;\
-	done
-
-new-problem:
-ifdef LANGUAGES
-	$(error On new-problem task, you should use LANGUAGE not LANGUAGES)
-endif
-
-ifndef FOLDER
-	$(error You must specify a FOLDER variable to create a new problem)
-endif
-
-ifndef LANGUAGE
-	$(error You must specify a LANGUAGE variable to create a new problem)
-endif
-
-	@mkdir -p $(FOLDER)
-	@touch $(FOLDER)/{out.txt,problem.md,tags.txt,$(shell basename $(FOLDER)).$(LANGUAGE)}
-
-ifeq ($(strip $(LANGUAGE)),sql)
-	@touch $(FOLDER)/{schema.sql,drop-table.sql}
-else
-	@touch $(FOLDER)/in.txt
-endif
 
 run: clean __run-build
 ifdef LANGUAGE
@@ -122,11 +74,11 @@ ifdef LANGUAGE
 endif
 	@scripts/run-problems.sh "$(FOLDERS)" "$(SUPPORTED_LANGUAGES)" "$(DOCKER_RUN)"
 
-no_docker: clean
+run_local: clean
 ifdef LANGUAGE
 	$(error On run task, you should use LANGUAGES not LANGUAGE)
 endif
-	@scripts/run-problems-no-docker.sh "$(FOLDERS)" "$(SUPPORTED_LANGUAGES)" "$(DOCKER_RUN)"
+	@scripts/run-problems-local.sh "$(FOLDERS)" "$(SUPPORTED_LANGUAGES)" "$(DOCKER_RUN)"
 
 wrong:
 	@find . -name 'WRONG' | sort

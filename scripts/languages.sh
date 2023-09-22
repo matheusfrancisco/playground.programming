@@ -10,7 +10,7 @@ for folder in $FOLDERS; do
     solutions="$(\
         find "$folder" \
             -regex \
-            '.*\(clj\)')"
+            '.*\(clj\|cpp\|zig\|c\|rs\|py\)')"
     echo "$(echo "$solutions" | wc -w | sed 's/ //g') $folder"
 done | sort -nr
 
