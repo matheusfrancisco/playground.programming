@@ -48,10 +48,6 @@ each folder could have been created in another github repository. (but I was too
   - algorithms/
     - bst.clj # it is a algorithms
   - solutions/
-    - codeforces/
-      - solution.clj
-      - 01.txt
-      - 01-out.txt
     - beecrowd/
       - 1000/ # number of the problem in the beecrowd website
         - solution.clj
@@ -62,14 +58,9 @@ each folder could have been created in another github repository. (but I was too
   - data_structures/
   - algorithms/
   - solutions/
-    - codeforces/
-      - solution.zig
-      - 01.txt
-      - 01-out.txt
     - beecrowd/
-      - solution.zig
-      - 01.txt
-      - 01-out.txt
+    - codeforces/
+    - google-code-jam/
 ```
 
 if you want learn with me just send me an email:
