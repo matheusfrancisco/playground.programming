@@ -11,7 +11,6 @@ CLJ = clj
 CPP =cpp
 C = c
 RS = rs
-ZIG = zig
 PY = py
 
 SUPPORTED_LANGUAGES = \
@@ -19,7 +18,6 @@ SUPPORTED_LANGUAGES = \
 	$(CPP) \
 	$(C) \
 	$(RS) \
-	$(ZIG) \
 	$(PY)
 
 ifdef LANGUAGES

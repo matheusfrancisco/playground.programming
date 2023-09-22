@@ -27,7 +27,13 @@ Usually the code here already pass in all test case at:
 - [UVA](https://onlinejudge.org/)
 - [Cracking The Code Interview- Book]()
 
-folder structure
+## Folder structure
+```
+make clean  # remove files created by the run task
+make run [FOLDER=path/to/run] [LANGUAGES='language extensions']  # run solutions
+make run # run solutions on ci
+make wrong  # show all solutions that are not complete yet
+```
 each folder could have been created in another github repository. (but I was too lazy to do it)
 
 ```
