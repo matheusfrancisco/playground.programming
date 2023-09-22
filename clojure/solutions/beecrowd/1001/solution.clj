@@ -1,4 +1,4 @@
-(ns beecrowd.1000.solution)
+(ns beecrowd.1001.solution)
 
 (defn main []
   (let [a (Integer/parseInt (read-line))

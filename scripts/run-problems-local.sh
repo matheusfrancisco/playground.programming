@@ -22,7 +22,7 @@ for language in $LANGUAGES; do
                   clojure -M ./*.clj > result-clj.txt
               fi
 
-              rm -rf './?'
+              # rm -rf './?'
 
               diff result-clj.txt out.txt
 
