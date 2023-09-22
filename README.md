@@ -1,4 +1,4 @@
-# Playground Algorithms
+# Playground Programming
 
 ![CI](https://github.com/matheusfrancisco/playground.programming/actions/workflows/ci.yaml/badge.svg)
 
@@ -8,6 +8,7 @@ use it to learn you favorite language.
 To add a solutions for a problem you need it must be passing in its website
 
 ### TODO
+- [ ] Make it easier to add new language to run on CI
 - [ ] add all my solutions (from those sites)
 - [ ] Add zig dockerfile
 - [ ] migrate .sh to clojure babashka (or another thing)
