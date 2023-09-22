@@ -52,7 +52,8 @@ each folder could have been created in another github repository. (but I was too
       - 1000/ # number of the problem in the beecrowd website
         - solution.clj
         - in.txt
-        - 01-out.txt
+        - out.txt
+        - problem.md
     - deps.edn
 /zig/
   - data_structures/
