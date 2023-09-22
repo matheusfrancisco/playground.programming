@@ -31,16 +31,17 @@ Usually the code here already pass in all test case at:
 ```
 make clean  # remove files created by the run task
 make run [FOLDER=path/to/run] [LANGUAGES='language extensions']  # run solutions
-make run # run solutions on ci
-make wrong  # show all solutions that are not complete yet
+make run # run solutions inside docker
+make run_local #it will run in your machine without docker this mean you need to have those language installed
 ```
 each folder could have been created in another github repository. (but I was too lazy to do it)
 
 ```
 /clojure/
-  - ds/
-    - bst.clj
+  - data_structure/
+    - tree-bst.clj # it is an data_structure
   - algorithms/
+    - bst.clj # it is a algorithms
   - solutions/
     - codeforces/
       - solution.clj
