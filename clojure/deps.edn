@@ -1,4 +1,4 @@
-{:paths ["solutions" "resources"]
+{:paths ["solutions" "resources" "data_structures"]
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}}
 
  :aliases
