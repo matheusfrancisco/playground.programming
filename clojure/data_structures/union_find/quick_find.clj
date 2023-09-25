@@ -1,4 +1,4 @@
-(ns union-find.impl)
+(ns union-find.quick-find)
 ; Author: matheusfrancisco
 
 #_(defprotocol IQuickFind
@@ -30,6 +30,7 @@
   (let [arr (make-union-find n)
         arr (union arr 1 2)
         arr (union arr 3 4)]
+    ;; for huge problems, this is not efficient
     (is-connected? arr 1 2)))
 
 (println (main 10))
