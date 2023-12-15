@@ -19,18 +19,42 @@
             (recur (inc j))))
         (recur (inc i)))))
 
-
 (defn knapsack
-  "Computes the maximum value that can be put in a knapsack of capacity W"
-  [w weights values n]
-  )
+  "this is a dynamic programming solution to the knapsack problem
+   it takes a capacity and a list of weights and a list of values
+   and returns the maximum value that can be carried in the knapsack
+   with the given capacity
+   it has more additional time complexity then usual
+   O(nm) time and O(nm) space
+   wher n is the number of items and m is the capacity
+   "
+  [k weights values n]
 
+  (let [values (reduce
+                (fn [dp i]
+                  (reduce
+                   (fn [acc j]
+                     (cond
+                       (or (= i 0)
+                           (= j 0)) (assoc-in acc [i j] 0)
+                       (<= (get-in weights [(- i 1)])  j)
+                       (let [max-value (max
+                                        (+
+                                         (get-in values [(- i 1)])
+                                         (get-in acc
+                                                 [(- i 1)
+                                                  (- j (get weights
+                                                            (- i 1)))]))
+                                        (get-in acc [(dec i) j]))
+                             acc (assoc-in acc [i j] max-value)]
+                         acc)
+                       :else (assoc-in acc [i j] (get-in acc [(- i 1) j]))))
+                   dp (range (inc k))))
+                (vec (repeat (inc n) (vec (repeat (+ 1 k) 0))))
+                (range (inc n)))]
+    (get-in values [n k])))
 
-(println (= (knapsack 6 [1, 2, 3, 5] [1, 5, 4, 8] 4) 10))
-
-#_(def k (knapsack 10 [10 20 30] [22 33 44] 3))
-#_(clojure.pprint/pprint k)
-
-#_(is (= (knapsack 10 [10 20 30] [22 33 44] 3) 30))
+(is (= (knapsack 6 [1, 2, 3, 5] [1, 5, 4, 8] 4) 10))
+(is (= (knapsack 10 [10 20 30] [22 33 44] 3) 22))
 
 

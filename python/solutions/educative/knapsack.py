@@ -13,6 +13,7 @@ At any later time, if we encounter the same sub-problem, we can return the store
 O(1)
  lookup instead of recalculating that subproblem.
 """
+import pprint
 
 def find_knapsack_top_down(capacity, weights, values, n):
     dp = [[-1 for i in range(capacity + 1)] for j in range(n + 1)]
@@ -45,10 +46,16 @@ def find_knapsack_bottom_up(capacity, weights, values, n):
             if i == 0 or j == 0:
                 dp[i][j] = 0
             elif weights[i-1] <= j:
-                dp[i][j] = max(values[i-1]+ dp[i-1][j-weights[i-1]], 
+                m = max(values[i-1]+ dp[i-1][j-weights[i-1]], 
                               dp[i-1][j])
-
+                dp[i][j] =m 
             else:
                 dp[i][j] = dp[i-1][j]
  
+    pprint.pprint(dp)
     return dp[-1][-1]
+
+d = find_knapsack_bottom_up(6, [1, 2, 3, 5], [1, 5, 4, 8], 4)
+pprint.pprint(d)
+d = find_knapsack_bottom_up(10, [10, 20, 30], [22, 33, 44], 3)
+pprint.pprint(d)
