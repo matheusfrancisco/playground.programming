@@ -52,10 +52,41 @@ def find_knapsack_bottom_up(capacity, weights, values, n):
             else:
                 dp[i][j] = dp[i-1][j]
  
-    pprint.pprint(dp)
     return dp[-1][-1]
+
+
+def find_knapsack_top(v,w, k, i=0, lookup= None):
+    lookup = {} if lookup is None else lookup
+    if (i,k) in lookup:
+        return lookup[(i,k)]
+
+    if len(v) == i or k < 0:
+        return 0
+    elif (w[i] > k):
+        return find_knapsack_top(v, w, k, i+1, lookup)
+    else:
+        lookup[(i,k)] = max(v[i]+ find_knapsack_top(v,w,k-w[i],i+1,lookup),
+                            find_knapsack_top(v, w,k,i+1, lookup))
+        return lookup[(i,k)]
+    
+
+def find_knapsack2n(v,w, k,i):
+    """not good time :2^n"""
+    if len(v) == i or k < 0:
+        return 0
+    else:
+        return max(v[i]+ find_knapsack_top(v,w,k-w[i],i+1),
+                            find_knapsack_top(v, w,k,i+1))
 
 d = find_knapsack_bottom_up(6, [1, 2, 3, 5], [1, 5, 4, 8], 4)
 pprint.pprint(d)
 d = find_knapsack_bottom_up(10, [10, 20, 30], [22, 33, 44], 3)
+pprint.pprint(d)
+d = find_knapsack_top([20, 30, 15, 25, 10],[6, 13, 7, 10, 3],20, 0, None)
+pprint.pprint(d)
+d = find_knapsack_top([22, 33, 44],[10, 20, 30], 10, 0, None)
+pprint.pprint(d)
+d = find_knapsack_bottom_up(10, [10, 20, 30], [22, 33, 44], 3)
+pprint.pprint(d)
+d = find_knapsack2n([22, 33, 44],[10, 20, 30], 10, 0)
 pprint.pprint(d)

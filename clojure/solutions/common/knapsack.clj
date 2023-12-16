@@ -54,6 +54,24 @@
                 (range (inc n)))]
     (get-in values [n k])))
 
+(defn
+  ^{:doc "knapsack time: o(nm) "}
+  knapsack-topdown
+  [k weights values i]
+  (let [lookup {}
+        value  (cond
+                 (contains? lookup [i k]) (let [v (get lookup [i k])]  v)
+                 (or (= i (count values)) (<= k 0)) 0
+                 (>  (get weights i) k) (let [v (first (knapsack-topdown k weights values (inc i)))]
+                                          v)
+                 :else (let [v (max
+                                (+ (first (knapsack-topdown (- k (get weights i)) weights values (inc i))) (get values i))
+                                (first (knapsack-topdown k weights values (inc i))))]
+                         v))]
+
+    [value (assoc lookup [i k] value)]))
+
+(is (= (first (knapsack-topdown 6  [1, 2, 3, 5] [1, 5, 4, 8] 0)) 10))
 (is (= (knapsack 6 [1, 2, 3, 5] [1, 5, 4, 8] 4) 10))
 (is (= (knapsack 10 [10 20 30] [22 33 44] 3) 22))
 
