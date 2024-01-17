@@ -28,32 +28,24 @@
   [dp i j v]
   (update-in dp [i j] (fn [_] v)))
 
+;; this it uses the bottom up approach to solve the problem of dp
 (defn subset-sum [arr, total]
   (let [dp (make-dp-reduce-map (inc total) (inc (count arr)))]
-    (loop [i 1
-           mdp dp]
-      (if (= i (inc (count arr)))
-        mdp
-        (recur (inc i)
-               (loop [j 1
-                      ndp mdp]
-                 (let [v (get arr (dec i))
-                       ndp (if (> v  j)
-                             (change-dp ndp i j (get-in ndp [(dec i) j]))
-                             (change-dp ndp i j (or (get-in ndp [(dec i) j])
-                                                    (get-in ndp [(dec i) (- j v)]))))]
-                   (recur (inc j) ndp))))))))
+    (get-in (loop [i 1
+                   matrix-dp dp]
+              (if (= i (inc (count arr)))
+                matrix-dp
+                (recur (inc i)
+                       (loop [j 1
+                              new-dp matrix-dp]
+                         (if (= j (inc total))
+                           new-dp
+                           (let [v (get arr (dec i))
+                                 ndp (if (> v  j)
+                                       (change-dp new-dp i j (get-in new-dp [(dec i) j]))
+                                       (change-dp new-dp i j (or (get-in new-dp [(dec i) j])
+                                                              (get-in new-dp [(dec i) (- j v)]))))]
+                             (recur (inc j) ndp)))))))
+            [(count arr) total])))
 
-(subset-sum [1, 2, 3 ,4], 6)
 (= (subset-sum [1, 2, 3 ,4], 6) true)
-
-#_(defn subset-sum-01
-    [ttl [item & items]]
-    (cond
-      (zero? ttl) [[]]
-      (or (neg? ttl) (nil? item)) []
-      :else (concat
-             (map #(conj % item) (subset-sum-01 (- ttl item) items))
-             (subset-sum-01 ttl items))))
-
-#_(subset-sum-01 6 [1 2 2 3 3])
