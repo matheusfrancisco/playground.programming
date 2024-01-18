@@ -1,4 +1,4 @@
-FROM clojure:latest
+FROM clojure:temurin-17-alpine
 
 RUN mkdir /code
 WORKDIR /code
