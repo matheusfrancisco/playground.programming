@@ -44,7 +44,7 @@
                                  ndp (if (> v  j)
                                        (change-dp new-dp i j (get-in new-dp [(dec i) j]))
                                        (change-dp new-dp i j (or (get-in new-dp [(dec i) j])
-                                                              (get-in new-dp [(dec i) (- j v)]))))]
+                                                                 (get-in new-dp [(dec i) (- j v)]))))]
                              (recur (inc j) ndp)))))))
             [(count arr) total])))
 

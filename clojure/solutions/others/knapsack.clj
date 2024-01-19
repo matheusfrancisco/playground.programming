@@ -1,4 +1,4 @@
-(ns solutions.common.knapsack
+(ns solutions.others.knapsack
   (:require
    [clojure.test :refer [is]]))
 
