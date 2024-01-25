@@ -1,4 +1,4 @@
-
+import collections
 
 def minSteps(s: str, t: str) -> int:
     c = collections.defaultdict(int)
@@ -17,4 +17,4 @@ def main():
     s, t = input().split(" ")
     print(minSteps(s, t))
 
-main():
+main()
