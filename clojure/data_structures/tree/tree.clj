@@ -11,23 +11,6 @@
 #_(defn binary-tree-list [x]
     (list (* 2 x) (+ 1 (* 2 x))))
 
-;"simple we are inserting to left and then to the right"
-; a bad way to insert a value in a tree
-#_(defn insert [tree value]
-    (let [node (node value nil nil)]
-      (cond
-        (nil? (:left tree)) (assoc tree :left node)
-        (nil? (:right tree)) (assoc tree :right node)
-        :else (let [left (insert (:left tree) value)
-                    branch (if (nil? left)
-                             (insert (:right tree) value)
-                             left)]
-                (assoc tree
-                       (if (nil? left)
-                         :right
-                         :left)
-                       branch)))))
-
 ; binary-search-tree
 (defn bst-insert [root value]
   (let [tree (cond
@@ -44,7 +27,11 @@
       (bst-insert  7)
       (bst-insert  2)))
 
-(defn print-tree [tree]
-  (let [e (tree :value)]))
+(defn pre-order [tree]
+  (when tree
+    (do
+      (print (str " " (:value tree)))
+      (pre-order (:left tree))
+      (pre-order (:right tree)))))
 
-(print-tree tree)
+(pre-order tree)
