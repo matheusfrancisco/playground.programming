@@ -8,24 +8,21 @@
 (defn binary-tree [root-value]
   (node root-value nil nil))
 
-#_(defn binary-tree-list [x]
-    (list (* 2 x) (+ 1 (* 2 x))))
-
 ; binary-search-tree
-(defn bst-insert [root value]
-  (let [tree (cond
-               (= root nil) (node value nil nil)
-               (> value (:value root))  (-> root
-                                            (assoc :left (bst-insert (:left root) value)))
-               (< value (:value root))   (-> root
-                                             (assoc :right (bst-insert (:right root) value))))]
-    tree))
+(defn bst-insert [new-value tree]
+  (cond
+    (nil? tree) (binary-tree new-value)
+    (<= new-value (:value tree)) (assoc tree :left (bst-insert new-value (:left tree)))
+    :else (assoc tree :right (bst-insert new-value (:right tree)))))
 
 (def tree
-  (-> (binary-tree 5)
-      (bst-insert  3)
-      (bst-insert  7)
-      (bst-insert  2)))
+  (-> (binary-tree 50)
+      (bst-insert  30)
+      (bst-insert  20)
+      (bst-insert  40)
+      (bst-insert  70)
+      (bst-insert  60)
+      (bst-insert  80)))
 
 (defn pre-order [tree]
   (when tree
@@ -34,4 +31,11 @@
       (pre-order (:left tree))
       (pre-order (:right tree)))))
 
-(pre-order tree)
+(defn inorder [tree]
+  (when tree
+    (do
+      (inorder (:left tree))
+      (print (str " " (:value tree)))
+      (inorder (:right tree)))))
+
+(inorder tree)
