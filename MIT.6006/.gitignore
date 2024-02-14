@@ -1,0 +1,6 @@
+lectures
+problems_*
+clojure/.lsp
+clojure/.clj-kondo/.cache
+clojure/.cpcache
+clojure/.nrepl-port
