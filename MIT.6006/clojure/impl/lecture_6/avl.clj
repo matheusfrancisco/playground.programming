@@ -1,95 +1,115 @@
-(ns lecture-6.avl)
+(ns lecture-6.avl
+  (:require
+   [clojure.string :as string]))
 
-(defrecord Node [value left right bf height])
+(defrecord Node [el left right])
 
-(defn height [node]
-  (if (nil? node)
-    0
-    (:height node)))
+(defn height
+  ([tree]
+   (height tree 0))
+  ([tree count]
+   (if tree
+     (max (height (:left tree) (inc count))
+          (height (:right tree) (inc count)))
+     count)))
 
-(defn get-balance [node]
-  (if (nil? node)
-    0
-    (- (height (:left node))
-       (height (:right node)))))
+(defn factor [{:keys [left right]}]
+  (- (height left) (height right)))
 
-(defn rotate-left [z]
-  (let [y (:right z)
-        t2 (:left y)
-        y (assoc y :left (assoc z :right t2))
-        y (assoc y :height (+ 1 (max (height (:left y))
-                                     (height (:right y))))
-                 :balance-factor (get-balance y))]
-    y))
-
-(defn rotate-right [z]
-  (let [y (:left z)
-        t3 (:right y)
-        y (assoc y :right (assoc z :left t3))
-        y (assoc y :height (+ 1 (max (height (:left y))
-                                     (height (:right y))))
-                 :balance-factor (get-balance y))]
-    y))
-
-(defn insert [node value]
-  (let [tree (->
-              (cond
-                (nil? node) (Node. value nil nil 0 1)
-                (< value (:value node)) (assoc node :left
-                                               (insert (:left node) value)
-                                               :height (+ 1 (max (height (:left node))
-                                                                 (height (:right node))))
-                                               :balance-factor (get-balance node))
-                (> value (:value node)) (assoc node
-                                               :right (insert (:right node) value)
-                                               :height (+ 1 (max (height (:left node))
-                                                                 (height (:right node))))
-                                               :balance-factor (get-balance node))))
-
-        tree (assoc tree :height (+ 1 (max (height (:left tree))
-                                           (height (:right tree))))
-                    :balance-factor (get-balance tree))
-        balance (get-balance tree)
-        _ (prn balance value "<" (-> tree :right :value))
-        tree (cond
-
-               (and (< balance -1)
-                    (> value (-> tree :right :value))) (do
-                                                         (prn 11)
-                                                         (rotate-left tree))
-               (and (< balance -1)
-                    (< value (-> tree :right :value))) (do
-                                                         (prn 10)
-                                                         (-> (rotate-right (:right tree))
-                                                             (assoc tree :right)
-                                                             (rotate-left)))
-               :else tree)]
-
-    (prn tree)
+(defn rotate-left [{:keys [el left right] :as tree}]
+  (if right
+    (->Node (:el right) (->Node el left (:left right)) (:right right))
     tree))
 
-(-> (insert nil 10)
-    (insert 20)
-    (insert 30)
-    #_(insert 40)
-    #_(insert 50)
-    #_(insert 25))
+(defn rotate-right [{:keys [el left right] :as tree}]
+  (if left
+    (->Node (:el left) (:left left) (->Node el (:right left) right))
+    tree))
 
-#_{:value 20,
-   :left
-   {:value 10,
-    :left nil,
-    :right nil,
-    :bf 0,
-    :height 3,
-    :balance-factor -2},
-   :right
-   {:value 30,
-    :left nil,
-    :right nil,
-    :bf 0,
-    :height 1,
-    :balance-factor 0},
-   :bf 0,
-   :height 4,
-   :balance-factor 2}
+(defn is-left-case? [tree]
+  (< (factor tree) -1))
+
+(defn is-left-right-case? [tree]
+  (and (is-left-case? tree) (> (factor (:right tree)) 0)))
+
+(defn is-right-case? [tree]
+  (> (factor tree) 1))
+
+(defn is-right-left-case? [tree]
+  (and (is-right-case? tree) (< (factor (:left tree)) 0)))
+
+(defn insert [{:keys [el left right] :as tree} value]
+  (cond
+    (nil? tree) (Node. value nil nil)
+    (< value el) (Node. el (insert left value) right)
+    (> value el) (Node. el left (insert right value))
+    :else tree))
+
+(defn balance [{:keys [el left right] :as tree}]
+  (cond
+    (is-right-left-case? tree) (rotate-right (->Node el (rotate-left left) right))
+    (is-left-right-case? tree) (rotate-left (->Node el left (rotate-right right)))
+    (is-right-case? tree) (rotate-right tree)
+    (is-left-case? tree) (rotate-left tree)
+    :else tree))
+
+(defn remove-element [{:keys [el left right] :as tree} value]
+  (cond
+    (nil? tree) nil
+    (< value el) (Node. el (remove left value) right)
+    (> value el) (Node. el left (remove right value))
+    (nil? left) right
+    (nil? right) left
+    :else (let [min-value (min right)]
+            (Node. min-value left (remove-element right min-value)))))
+
+(def avl-insert (comp balance insert))
+(def avl-remove (comp balance remove-element))
+(def seq->avl (partial reduce avl-insert nil))
+
+(defn tabs [n]
+  (string/join (repeat n "\t")))
+
+(defn visualise
+  ([tree] (visualise tree 0))
+  ([{:keys [el left right] :as tree} depth]
+   (if tree
+     (str (visualise right (inc depth)) (tabs depth) el "\n" (visualise left (inc depth)))
+     (str (tabs depth) "~\n"))))
+
+(visualise (seq->avl [1 2 3]))
+
+#_(comment
+    (defn min [{:keys [el left]}]
+      (if left
+        (recur left)
+        el))
+
+    (defn max [{:keys [el right]}]
+      (if right
+        (recur right)
+        el))
+
+    (defn contains? [{:keys [el left right] :as tree} value]
+      (cond
+        (nil? tree) false
+        (< value el) (recur left value)
+        (> value el) (recur right value)
+        :else true))
+
+    #_(defn count [{:keys [left right] :as tree}]
+        (if tree
+          (+ 1 (count left) (count right))
+          0))
+
+;; assert invariant
+    (defn bst?
+      ([tree] (bst? tree Integer/MIN_VALUE Integer/MAX_VALUE))
+      ([{:keys [el left right] :as tree} min max]
+       (cond
+         (nil? tree) true
+         (or (< el min) (> el max)) false
+         :else (and (bst? left min (dec el))
+                    (bst? right (inc el) max)))))
+  ;
+    )
