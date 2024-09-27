@@ -4,7 +4,7 @@
 
 ;;d[(i target)] = f(i - 1, target - nums[i]) + f(i - 1, target + nums[i])
 
-(def target 4)
+(def target (atom nil))
 (def dp (atom {}))
 
 (defn backtracking [nums i t]
@@ -23,30 +23,33 @@
 (defn calculate [nums target]
   (backtracking nums 0 target))
 
-(calculate [1 1 1 1 1] 2)
+#_(calculate [1 1 1 1 1] 2)
 
 #_(defn return-stored [store k v]
-  (let [store (cond-> store
-                (not (contains? store k))
-                (assoc k v))]
-    [store (get store k)]))
+    (let [store (cond-> store
+                  (not (contains? store k))
+                  (assoc k v))]
+      [store (get store k)]))
 
 #_(defn bck [nums i t]
-  (reduce  (fn [{:keys [store acc]} n]
-             (let [[store v] (return-stored store [i t] n)]
-               {:store store
-                :acc (conj acc v)})) nums))
+    (reduce  (fn [{:keys [store acc]} n]
+               (let [[store v] (return-stored store [i t] n)]
+                 {:store store
+                  :acc (conj acc v)})) nums))
 
 #_(bck [1 1 1 1 1] 0 2)
 
 #_(defn main []
-    (let [[size target] (string/split
-                         (Integer/parseInt) #" ")
+    (let [[size t] (string/split
+                    (Integer/parseInt) #" ")
+          _ (println "size" size "t" t)
           nums  (loop [i 0 nums []]
                   (if (< i (Integer/parseInt size))
                     (recur (inc i) (conj nums (Integer/parseInt
                                                (read-line))))
-                    nums))]
+                    nums))
+          _ (swap! target (fn [_] t))
+          result (calculate nums target)]
+      result))
 
-      nums))
-
+#_(println (main))
