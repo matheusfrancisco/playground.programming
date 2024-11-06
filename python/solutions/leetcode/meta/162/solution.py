@@ -11,17 +11,15 @@ class Solution:
 
             mid_v = nums[mid]
             left = nums[mid - 1] if mid > 0 else float("-inf")
-            right = nums[mid + 1] if mid < len(nums) - 1 else float("inf")
+            right = nums[mid + 1] if mid < len(nums) - 1 else float("-inf")
 
-            if left < mid_v and mid_v > right:
+            if left < mid_v > right:
                 return mid
             elif left < mid_v < right:
                 l = mid + 1
-            elif left > mid_v > right:
+            else:
                 r = mid - 1
-
-        return -1
 
 
 obj = Solution()
-obj.findPeakElement([1, 2, 1, 3, 5, 6, 4]) == 2
+print(obj.findPeakElement([1, 2, 1, 3, 5, 6, 4]) == 5)
