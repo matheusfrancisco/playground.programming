@@ -4,6 +4,19 @@ Given a string of unique letters, find all of its distinct permutations.
 Permutation means arranging things with an order. 
 For example, permutations of [1, 2] are [1, 2] and [2, 1]. 
 Permutations are best visualized with trees.
+
+Time Complexity
+We have n letters to choose in the first level, n - 1 
+choices in the second level and so on therefore the 
+number of strings we generate is n * (n - 1) * (n - 2) * ... * 1,
+or O(n!) (see math basics if you need a refresher on factorial). 
+Since each string has length n, generating all the strings requires 
+O(n * n!) time.
+
+Space Complexity
+The total space complexity is given by the amount of space 
+required by the strings we're constructing. 
+Like the time complexity, the space complexity is also O(n * n!).
 """
 
 from typing import List
