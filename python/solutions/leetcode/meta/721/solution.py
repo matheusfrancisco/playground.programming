@@ -35,3 +35,8 @@ class Solution:
 acc = [["John", "johnsmith@mail.com", "john_newyork@mail.com"], ["John", "johnsmith@mail.com",
                                                                  "john00@mail.com"], ["Mary", "mary@mail.com"], ["John", "johnnybravo@mail.com"]]
 print(Solution().accountsMerge(acc))
+
+# O(N*K*NlogK) N is the number of accounts, 
+# K is the average number of emails in each account
+
+# Space complexity: O(N*K) N is the number of accounts,
