@@ -7,6 +7,15 @@ class Node:
         self.right = None
         self.parent = None
 
+class Solution2:
+
+    def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':
+        p_copy = p
+        q_copy = q
+        while p_copy != q_copy:
+            q_copy = q_copy.parent if q_copy else p
+            p_copy = p_copy.parent if p_copy else q
+        return p_copy
 
 
 class Solution:
