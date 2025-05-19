@@ -1,5 +1,9 @@
 {:paths ["solutions" "resources" "data_structures" "algorithms"]
- :deps {org.clojure/clojure {:mvn/version "1.11.1"}}
+ :deps {org.clojure/clojure {:mvn/version "1.11.1"}
+        org.apache.pdfbox/pdfbox {:mvn/version "3.0.3"}
+        org.apache.pdfbox/pdfbox-io {:mvn/version "3.0.3"}
+        org.apache.pdfbox/pdfbox-tools {:mvn/version "3.0.3"}
+        #_pdfboxing/pdfboxing #_{:mvn/version "0.1.15.5-SNAPSHOT"}}
 
  :aliases
  {;; frontend
