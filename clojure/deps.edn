@@ -3,11 +3,12 @@
         org.apache.pdfbox/pdfbox {:mvn/version "3.0.3"}
         org.apache.pdfbox/pdfbox-io {:mvn/version "3.0.3"}
         org.apache.pdfbox/pdfbox-tools {:mvn/version "3.0.3"}
+        org.clojure/core.async {:mvn/version "1.9.808-alpha1"}
+
         #_pdfboxing/pdfboxing #_{:mvn/version "0.1.15.5-SNAPSHOT"}}
 
  :aliases
- {;; frontend
-  ;; clj -M:test
+ {;; clj -M:test
   :test {:extra-paths ["test"]
          :extra-deps  {lambdaisland/kaocha {:mvn/version "1.70.1086"}
                        lambdaisland/kaocha-cloverage {:mvn/version "1.0.75"}
