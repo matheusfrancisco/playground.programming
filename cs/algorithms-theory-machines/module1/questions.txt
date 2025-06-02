@@ -1,0 +1,12 @@
+4.2.4 Describe what happens if you apply binary search to an unordered array.
+Why shouldn't you check whether the array is sorted before each call to binary search?
+Could you check that the elements binary search examines are in ascending order? 
+If so, would that check be effective?
+
+4.2.18 Analyze mathematically the number of compares that mergesort makes to sort 
+an array of length n. For simplicity assume that n is a power of 2.
+
+4.2.2 Develop a nonrecursive implementation of binary search.
+
+4.2.10 Write a filter that reads strings from standard input and prints them 
+to standard output, in sorted order with all duplicate strings removed.
