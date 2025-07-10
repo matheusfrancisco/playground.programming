@@ -1,4 +1,4 @@
-{:paths ["solutions" "resources" "data_structures" "algorithms"]
+{:paths ["solutions" "resources" "data_structures" "algorithms" "kata"]
  :deps {org.clojure/clojure {:mvn/version "1.11.1"}
         org.apache.pdfbox/pdfbox {:mvn/version "3.0.3"}
         org.apache.pdfbox/pdfbox-io {:mvn/version "3.0.3"}
