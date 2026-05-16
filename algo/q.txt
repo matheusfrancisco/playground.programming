@@ -1,0 +1,38 @@
+
+question to ask about a problem after solving it:
+
+What was the hidden structure?
+What clue should have made me think of this technique?
+What invariant made the solution work?
+Where did my first idea fail?
+What family of problems does this belong to?
+
+
+after:
+I solved/read the solution.
+Now I know this pattern:
+"when I need fast range aggregation, consider prefix sums, Fenwick tree, segment tree, or sparse table depending on updates."
+
+
+for e.g complex
+B-tree insertion:
+descend -> insert -> overflow -> split -> promote median -> maybe recurse upward
+
+token stream -> current position -> parse smaller grammar rule -> return AST node + new position
+
+
+rust borrow 
+if mutation needs access to multiple parts of a structure,
+consider changing representation before fighting lifetimes
+
+1. What was the problem asking structurally?
+2. What was the key invariant?
+3. What technique solved it?
+4. What clue did I miss?
+5. What similar problem should I solve next?
+
+1. Solve in clusters, not randomly. Pick one topic say, binary search on the answer  and grind 15-20 problems on it back to back. Don't move on until the pattern feels obvious. Random practice builds shallow recognition; clustered practice burns the pattern in.
+2. The 20-minute rule. Think for 20 minutes. If stuck, read the editorial. Don't grind for 3 hours on a problem above your level you're just reinforcing confusion. Read the solution, understand why that approach was the right call, then re-implement from scratch without looking.
+3. Reverse-engineer the signal. After solving (or reading the solution), ask: "What in the problem statement should have told me to use this?" Write it down. This is the single highest-leverage habit. You're building your own signal → pattern dictionary.
+4. Solve slightly above your level. If you're 1200-rated, do 1300-1400 problems. Comfort zone = no growth. Way above zone = no learning, just frustration.
+5. Re-solve old problems. A week later, redo problems you struggled with. If the approach doesn't come within 2 minutes, the pattern isn't internalized yet.
