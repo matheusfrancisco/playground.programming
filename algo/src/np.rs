@@ -9,40 +9,34 @@
 //      current_time += t;
 // return workers_used <= k;
 
-use core::num;
 
-fn feasible(T: i32, times: &[i32], k: i32) -> bool {
+fn feasible(mid: i32, np: &Vec<i32>, number_workers: i32) -> bool {
     let mut workers_used = 1;
     let mut current_time = 0;
 
-    for &t in times {
-        if t > T {
-            return false; // If any single task exceeds T, it's not feasible
-        }
-        if current_time + t > T {
+    for t in np {
+        if current_time + t > mid {
             workers_used += 1;
-            current_time = t; // Start a new worker with the current task
+            current_time = *t;
         } else {
-            current_time += t; // Continue with the current worker
+            current_time = current_time + t;
         }
     }
-
-    workers_used <= k
+    workers_used <= number_workers
 }
 
 fn newspapers_split(np: Vec<i32>, number_workers: i32) -> i32 {
-    let mut lo = 0;
+    let mut lo = *np.iter().max().unwrap_or(&0);
     let mut hi = np.iter().sum();
 
     while lo < hi {
         let mid = lo + (hi - lo) / 2;
         if feasible(mid, &np, number_workers) {
-            hi = mid; // Try to find a smaller maximum
+            hi = mid;
         } else {
-            lo = mid + 1; // Increase the maximum
+            lo = mid + 1;
         }
     }
-
     lo
 }
 

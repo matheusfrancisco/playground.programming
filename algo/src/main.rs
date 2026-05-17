@@ -4,6 +4,9 @@ mod rt;
 mod bananas;
 mod peak;
 mod np;
+mod two_pointers;
+mod movezeros;
+mod removenth;
 
 fn main() {
     println!("Hello, world!");
