@@ -8,6 +8,11 @@ mod two_pointers;
 mod movezeros;
 mod removenth;
 mod tws;
+mod palindrome;
+mod wt;
+mod sw;
+mod ana;
+
 
 fn main() {
     println!("Hello, world!");
