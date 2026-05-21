@@ -1,3 +1,33 @@
+use std::collections::HashMap;
+
+pub struct Solution {}
+
+impl Solution {
+    pub fn group_anagrams(strs: Vec<String>) -> Vec<Vec<String>> {
+        let mut map: HashMap<[u16; 26], Vec<String>> = HashMap::new();
+
+        for s in &strs {
+            let mut count = [0u16; 26];
+
+            for c in s.bytes() {
+                count[(c - b'a') as usize] += 1;
+            }
+
+            map.entry(count).or_default().push(s.clone());
+        }
+
+        map.into_values().collect()
+    }
+}
+
+fn normalize(mut groups: Vec<Vec<String>>) -> Vec<Vec<String>> {
+    for group in &mut groups {
+        group.sort();
+    }
+    groups.sort();
+    groups
+}
+
 fn find_anagram(s: String, p: String) -> Vec<i32> {
     if p.len() > s.len() {
         return vec![];
@@ -16,7 +46,7 @@ fn find_anagram(s: String, p: String) -> Vec<i32> {
             s_count -= 1 << (s.as_bytes()[i - k] - b'a');
         }
         if s_count == p_count {
-            indexes.push((i - k + 1) as i32);
+            indexes.push((i + 1 - k) as i32);
         }
     }
     indexes
@@ -26,6 +56,28 @@ fn find_anagram(s: String, p: String) -> Vec<i32> {
 mod tests {
 
     use super::*;
+
+    #[test]
+    fn test_group_anagrams() {
+        let strs = vec![
+            "eat".to_string(),
+            "tea".to_string(),
+            "tan".to_string(),
+            "ate".to_string(),
+            "nat".to_string(),
+            "bat".to_string(),
+        ];
+
+        let result = Solution::group_anagrams(strs);
+        assert_eq!(
+            normalize(result),
+            normalize(vec![
+                vec!["bat".to_string()],
+                vec!["tan".to_string(), "nat".to_string()],
+                vec!["eat".to_string(), "tea".to_string(), "ate".to_string()],
+            ])
+        );
+    }
 
     #[test]
     fn test_find_anagram() {
