@@ -12,6 +12,7 @@ mod palindrome;
 mod wt;
 mod sw;
 mod ana;
+mod tk;
 
 
 fn main() {
