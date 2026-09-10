@@ -1,6 +1,8 @@
 .clj-kondo/
 **/.cpcache
 clojure/.cpcache
+algozig/.zig-cache/*
+algozig/zig-out/*
 .lsp/
 *.exe
 *.hi
