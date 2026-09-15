@@ -14,12 +14,13 @@
 //!
 //! Requirements
 //! - BFS from the start word; O(n · L · 26) neighbor generation or O(n² · L)
-//!   pairwise comparison — either is fine at study scale, but know which
+//!   pairwise comparison  either is fine at study scale, but know which
 //!   you're writing.
 //! - Use `alloc` for the queue / visited set; free everything (tests run
 //!   under the leak-checking allocator).
 
 const std = @import("std");
+const print = std.debug.print;
 
 /// Minimum number of one-letter steps from `begin` to `end` using only
 /// dictionary `words` for intermediates and the end. 0 if unreachable.
@@ -30,11 +31,59 @@ pub fn ladderLength(
     end: []const u8,
     words: []const []const u8,
 ) !usize {
-    _ = alloc;
-    _ = begin;
-    _ = end;
-    _ = words;
-    @panic("TODO: implement");
+    var map = std.StringHashMap(std.ArrayList([]const u8)).init(alloc);
+    defer {
+        var it = map.iterator();
+        while (it.next()) |e| {
+            alloc.free(e.key_ptr.*); // if you dupe'd the key
+            e.value_ptr.deinit(alloc);
+        }
+        map.deinit();
+    }
+
+    for (words) |w| {
+        for (0..w.len) |i| {
+            const pat = try alloc.dupe(u8, w);
+            pat[i] = '*';
+
+            const gop = try map.getOrPut(pat);
+            if (gop.found_existing) {
+                alloc.free(pat);
+            } else {
+                gop.value_ptr.* = .empty;
+            }
+            try gop.value_ptr.append(alloc, w);
+        }
+    }
+
+    var queue: std.ArrayList([]const u8) = .empty;
+    defer queue.deinit(alloc);
+    try queue.append(alloc, begin);
+    var dist: std.StringHashMap(usize) = .init(alloc);
+    defer dist.deinit();
+    try dist.put(begin, 0);
+
+    var head: usize = 0;
+    while (head < queue.items.len) : (head += 1) {
+        const cur = queue.items[head];
+        const d = dist.get(cur).?;
+        if (std.mem.eql(u8, cur, end)) return d;
+
+        for (0..cur.len) |i| {
+            const pat = try alloc.dupe(u8, cur);
+            pat[i] = '*';
+            const found = map.get(pat);
+            alloc.free(pat);
+            const list = found orelse continue;
+            for (list.items) |w| {
+                if (dist.contains(w)) continue;
+                try dist.put(w, d + 1);
+                try queue.append(alloc, w);
+            }
+        }
+    }
+
+    return 0;
 }
 
 /// True if a and b have equal length and differ in exactly one position.
