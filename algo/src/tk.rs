@@ -1,4 +1,23 @@
-use std::collections::HashMap;
+use std::{cmp::Reverse, collections::{BinaryHeap, HashMap}};
+
+fn tpk(arr: Vec<i32>, k: usize) -> Vec<i32> {
+    let k = k as usize;
+    let mut count = HashMap::new();
+    for &num in &arr {
+        *count.entry(num).or_insert(0i32) += 1;
+    }
+
+    let mut heap = BinaryHeap::new();
+    for (&num, &freq) in &count {
+        heap.push(Reverse((freq, num)));
+        if heap.len() > k {
+            heap.pop();
+        }
+    }
+
+    heap.into_iter().map(|Reverse((_, num))| num).collect()
+
+}
 
 fn min_heapfy(arr: &mut Vec<i32>, n: usize, i: usize) {
     let mut smallest = i;
@@ -102,7 +121,7 @@ mod tests {
 
     #[test]
     fn test_tk() {
-        let arr = vec![1,  8, 8];
+        let arr = vec![1, 8, 8];
         let r = topk_distinct(arr, 1);
         assert_eq!(r, vec![8]);
     }

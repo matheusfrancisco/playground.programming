@@ -1,3 +1,7 @@
+mod prng;
+mod wl;
+mod food_fill;
+mod insert_into_bst;
 mod binary_search;
 mod sqrt;
 mod rt;
@@ -13,6 +17,7 @@ mod wt;
 mod sw;
 mod ana;
 mod tk;
+mod valid_bst;
 
 
 fn main() {
