@@ -1,4 +1,7 @@
 mod prng;
+mod kmm;
+mod cs;
+mod dfss;
 mod wl;
 mod food_fill;
 mod insert_into_bst;
